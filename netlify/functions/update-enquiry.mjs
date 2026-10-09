@@ -1,7 +1,9 @@
 import { getStore } from '@netlify/blobs';
 const out = (body, status=200) => new Response(JSON.stringify(body), { status, headers:{'content-type':'application/json','cache-control':'no-store'} });
 export default async (request) => {
-  if (request.headers.get('x-admin-key') !== process.env.ADMIN_PANEL_KEY) return out({error:'Unauthorized'},401);
+  const token = (request.headers.get('authorization') || '').replace(/^Bearer\s+/i,'');
+  const session = token ? await getStore('admin-sessions').get(token,{type:'json'}) : null;
+  if (!(session?.expiresAt > Date.now()) && request.headers.get('x-admin-key') !== process.env.ADMIN_PANEL_KEY) return out({error:'Unauthorized'},401);
   if (request.method !== 'PATCH') return out({error:'Method not allowed'},405);
   const { id, status } = await request.json();
   if (!id || !['New','In review','Closed'].includes(status)) return out({error:'Invalid update'},400);

@@ -16,7 +16,8 @@ export default async (request) => {
     const store = getStore('boston-enquiries');
     await store.setJSON(id, record);
 
-    const pixelId = process.env.META_DATASET_ID;
+    // Pixel/Dataset IDs are public identifiers; the access token remains server-only.
+    const pixelId = '2118177498837648';
     const accessToken = process.env.META_ACCESS_TOKEN;
     if (pixelId && accessToken) {
       const eventId = payload.eventId || id;
