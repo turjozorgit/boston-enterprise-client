@@ -3,6 +3,10 @@
   command = "npm run build"
   functions = "netlify/functions"
 
+# META_DATASET_ID is the public Meta Pixel ID, which must appear in the page HTML.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "META_DATASET_ID"
+
 [[redirects]]
   from = "/api/submit-enquiry"
   to = "/.netlify/functions/submit-enquiry"
