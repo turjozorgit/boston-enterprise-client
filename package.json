@@ -1,0 +1,14 @@
+{
+  "name": "boston-enterprise",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Private Boston Enterprise prototype with a local-only enquiry builder",
+  "scripts": {
+    "start": "python3 -m http.server 8080 --directory public",
+    "check": "node --check public/app.js",
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
